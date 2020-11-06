@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.TimeUnit;
+
 @RestController  //服务提供者不跳转页面的,一般直接将数据已JSON返回
 @Slf4j  //内置log对象   它用来记录日志
 public class PaymentController {
@@ -56,4 +58,19 @@ public class PaymentController {
             return  new CommonResult<>(99999,"查询时异常="+e.getMessage());
         }
     };
+
+
+
+    //实验超时问题
+    @GetMapping(value = "/payment/feign/timeout")
+    public String paymentFeignTimeout() {
+        try {
+            TimeUnit.SECONDS.sleep(3);  //睡三秒
+        } catch (Exception e) {
+            e.printStackTrace();
+        } //单位秒
+        return port+"";
+
+
+    }
 }
